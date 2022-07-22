@@ -9,10 +9,11 @@
         MISO                         12
         SCK                          13          
 */
+//https://github.com/sandeepmistry/arduino-LoRa/blob/master/API.md
+
 #include <SPI.h>
 #include <LoRa.h>
 
-String gui;
 int i = 0;
 
 void initLora();
@@ -25,21 +26,23 @@ void setup() {
 
 void loop() {
   sendLora();
+  delay(2000);
 }
 
 // Cau hinh lora
 void initLora(){ 
-  while (!Serial);
-  Serial.println("LoRa Sender");
+  Serial.println("LoRa Send");
   
   if (!LoRa.begin(433E6)) {
     Serial.println("Starting LoRa failed!");
     while (1);
   }
-
-  LoRa.setSpreadingFactor(10);
-  LoRa.setSignalBandwidth(12345);
+  
+  LoRa.setSpreadingFactor(10);    // He so lan truyen 6 -> 12 | mac dinh la 7
+  LoRa.setSignalBandwidth(12345); // Bang thong | mac dinh la 125E3
   LoRa.crc();
+
+  Serial.println("LoRa Gateway started");
 }
 
 // Gui Lora
@@ -47,6 +50,7 @@ void sendLora() {
   LoRa.beginPacket();
   LoRa.print(i);
   LoRa.endPacket();
+  Serial.print("Arduno nano - Send: ");
   Serial.println(i);
   i++;
 }
