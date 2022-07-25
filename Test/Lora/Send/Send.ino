@@ -26,7 +26,7 @@ void setup() {
 
 void loop() {
   sendLora();
-  delay(2000);
+  delay(1000);
 }
 
 // Cau hinh lora
